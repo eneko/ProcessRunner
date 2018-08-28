@@ -1,7 +1,7 @@
 import XCTest
 import System
 
-final class SystemTests: XCTestCase {
+final class StandardOutputTests: XCTestCase {
 
     func testEchoCombined() throws {
         XCTAssertEqual(try system(command: "echo hello world", captureOutput: true).standardOutput, "hello world")
@@ -20,7 +20,7 @@ final class SystemTests: XCTestCase {
     }
 
     func testRedirect() throws {
-        XCTAssertEqual(try system(command: "echo hello cat > cat", captureOutput: true).standardOutput, "hello cat > cat")
+        XCTAssertEqual(try system(command: "echo hello cat > cat && cat cat", captureOutput: true).standardOutput, "hello cat > cat && cat cat")
     }
 
     func testShell() throws {
@@ -34,8 +34,24 @@ final class SystemTests: XCTestCase {
         XCTAssertEqual(try system(command: "sh", "-c", "echo foo bar | awk '{print $2}'", captureOutput: true).standardOutput, "bar")
     }
 
+    func testShellRedirect() throws {
+        XCTAssertEqual(try system(shell: "echo hello cat > cat && cat cat", captureOutput: true).standardOutput, "hello cat")
+    }
+
+    func testNoStandardOutput() throws {
+        XCTAssertEqual(try system(command: "cat --foobar", captureOutput: true).standardOutput, "")
+    }
+
     static var allTests = [
         ("testEchoCombined", testEchoCombined),
         ("testEchoSplit", testEchoSplit),
+        ("testEchoEscaping", testEchoEscaping),
+        ("testPipe", testPipe),
+        ("testRedirect", testRedirect),
+        ("testShell", testShell),
+        ("testShellPipe", testShellPipe),
+        ("testShellRedirect", testShellRedirect),
+        ("testNoStandardOutput", testNoStandardOutput),
     ]
+
 }
