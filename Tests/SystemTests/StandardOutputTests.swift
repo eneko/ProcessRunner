@@ -38,6 +38,10 @@ final class StandardOutputTests: XCTestCase {
         XCTAssertEqual(try system(shell: "echo hello cat > cat && cat cat", captureOutput: true).standardOutput, "hello cat")
     }
 
+    func testShellRedirectPipe() throws {
+        XCTAssertEqual(try system(shell: "echo hello cat > cat && cat cat | awk '{print $2}'", captureOutput: true).standardOutput, "cat")
+    }
+
     func testNoStandardOutput() throws {
         XCTAssertEqual(try system(command: "cat --foobar", captureOutput: true).standardOutput, "")
     }
