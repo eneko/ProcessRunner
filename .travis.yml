@@ -3,9 +3,11 @@ language: generic
 matrix:
   include:
     - os: linux
+      name: Linux Trusty
       dist: trusty
       sudo: required
     - os: osx
+      name: macOS
       osx_image: xcode9.4
 
 install:
