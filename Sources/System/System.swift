@@ -14,7 +14,8 @@ import Basic
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
 public func system(command: [String], captureOutput: Bool = false) throws -> ProcessResult {
-    let process = Basic.Process(arguments: command, redirectOutput: captureOutput)
+    let redirection: Basic.Process.OutputRedirection = captureOutput ? .collect : .none
+    let process = Basic.Process(arguments: command, outputRedirection: redirection)
     try process.launch()
     let result = try process.waitUntilExit()
     return result
