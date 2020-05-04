@@ -102,8 +102,5 @@ enum SystemError: Error {
 
 func which(program: String) throws -> String? {
     let result = try ProcessRunner(command: "/usr/bin/env", arguments: ["which", program], captureOutput: true).run()
-    guard FileManager.default.isExecutableFile(atPath: result.standardOutput) else {
-        return nil
-    }
     return result.standardOutput
 }
