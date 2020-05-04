@@ -13,6 +13,6 @@ public struct ProcessResult {
 
     /// Returns `true` if the process finalized with exit code 0.
     public var success: Bool {
-        exitStatus  == 0
+        return exitStatus  == 0
     }
 }
