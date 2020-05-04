@@ -14,9 +14,7 @@ import Foundation
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
 public func system(command: String, parameters: [String], captureOutput: Bool = false) throws -> ProcessResult {
-    guard let executablePath = try which(program: command) else {
-        throw SystemError.binaryNotFound(program: command)
-    }
+    let executablePath = try which(program: command)
     return try ProcessRunner(command: executablePath, arguments: parameters,
                              captureOutput: captureOutput).run()
 }
@@ -97,10 +95,9 @@ public func system(shell: String, captureOutput: Bool = false) throws -> Process
 
 enum SystemError: Error {
     case missingCommand
-    case binaryNotFound(program: String)
 }
 
-func which(program: String) throws -> String? {
+func which(program: String) throws -> String {
     let result = try ProcessRunner(command: "/usr/bin/env", arguments: ["which", program], captureOutput: true).run()
     return result.standardOutput
 }
