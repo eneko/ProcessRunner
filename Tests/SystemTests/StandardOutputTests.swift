@@ -45,17 +45,4 @@ final class StandardOutputTests: XCTestCase {
     func testNoStandardOutput() throws {
         XCTAssertEqual(try system(command: "cat --foobar", captureOutput: true).standardOutput, "")
     }
-
-    static var allTests = [
-        ("testEchoCombined", testEchoCombined),
-        ("testEchoSplit", testEchoSplit),
-        ("testEchoEscaping", testEchoEscaping),
-        ("testPipe", testPipe),
-        ("testRedirect", testRedirect),
-        ("testShell", testShell),
-        ("testShellPipe", testShellPipe),
-        ("testShellRedirect", testShellRedirect),
-        ("testNoStandardOutput", testNoStandardOutput),
-    ]
-
 }
