@@ -14,11 +14,4 @@ final class SuccessFailureTests: XCTestCase {
     func testProcessNotFound() {
         XCTAssertThrowsError(try system(command: "echoooooo foo bar"))
     }
-
-    static var allTests = [
-        ("testSuccess", testSuccess),
-        ("testFailure", testFailure),
-        ("testProcessNotFound", testProcessNotFound),
-    ]
-
 }

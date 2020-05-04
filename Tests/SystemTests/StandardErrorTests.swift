@@ -18,9 +18,4 @@ final class StandardErrorTests: XCTestCase {
     func testStandardErrorShell() throws {
         XCTAssertTrue(try system(shell: "cat --foobar", captureOutput: true).standardError.contains(expectedError))
     }
-
-    static var allTests = [
-        ("testStandardError", testStandardError),
-        ("testStandardErrorShell", testStandardErrorShell),
-    ]
 }
