@@ -5,18 +5,23 @@ import Foundation
 /// `system` will wait for the process to finish, blocking the current thread.
 ///
 /// - Parameters:
-///   - command: Command to execute.
+///   - command: Command to execute (full binary path or name of executable in $PATH).
 ///   - parameters: List of parameters to pass to the command.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
-///     the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    Defaults to `false`.
+///   - currentDirectoryPath: Specify current directory for child process (optional)
 /// - Returns: Process result data which is available after process termination.
 ///   The `ProcessResult` object includes exit code or termination signal and any captured output.
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
-public func system(command: String, parameters: [String], captureOutput: Bool = false) throws -> ProcessResult {
-    let executablePath = try which(program: command)
+public func system(command: String, parameters: [String], captureOutput: Bool = false,
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult
+{
+    let executablePath = /*command.hasPrefix("/") ? command :*/ try which(program: command)
     return try ProcessRunner(command: executablePath, arguments: parameters,
-                             captureOutput: captureOutput).run()
+                             captureOutput: captureOutput,
+                             currentDirectoryPath: currentDirectoryPath).run()
 }
 
 // MARK: Process helpers
@@ -26,19 +31,22 @@ public func system(command: String, parameters: [String], captureOutput: Bool = 
 /// `system` will wait for the process to finish, blocking the current thread.
 ///
 /// - Parameters:
-///   - command: Command to execute and list of parameters, if any.
+///   - command: Command to execute (full binary path or name of executable in $PATH) and list of parameters, if any.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
-///     the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    Defaults to `false`.
+///   - currentDirectoryPath: Specify current directory for child process (optional)
 /// - Returns: Process result data which is available after process termination.
 ///   The `ProcessResult` object includes exit code or termination signal and any captured output.
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
-public func system(command: [String], captureOutput: Bool = false) throws -> ProcessResult {
+public func system(command: [String], captureOutput: Bool = false,
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult {
     guard let executable = command.first else {
         throw SystemError.missingCommand
     }
     return try system(command: executable, parameters: Array(command[1...]),
-                      captureOutput: captureOutput)
+                      captureOutput: captureOutput, currentDirectoryPath: currentDirectoryPath)
 }
 
 /// Executes command with parameters as a child process
@@ -46,15 +54,19 @@ public func system(command: [String], captureOutput: Bool = false) throws -> Pro
 /// `system` will wait for the process to finish, blocking the current thread.
 ///
 /// - Parameters:
-///   - command: Command to execute and list of parameters, if any. Parameters will be split by spaces.
+///   - command: Command to execute (full binary path or name of executable in $PATH) and list of parameters. Parameters will be split by spaces.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
-///     the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    Defaults to `false`.
+///   - currentDirectoryPath: Specify current directory for child process (optional)
 /// - Returns: Process result data which is available after process termination.
 ///   The `ProcessResult` object includes exit code or termination signal and any captured output.
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
-public func system(command: String, captureOutput: Bool = false) throws -> ProcessResult {
-    return try system(command: command.split(separator: " ").map(String.init), captureOutput: captureOutput)
+public func system(command: String, captureOutput: Bool = false,
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult {
+    return try system(command: command.split(separator: " ").map(String.init),
+                      captureOutput: captureOutput, currentDirectoryPath: currentDirectoryPath)
 }
 
 /// Executes command with parameters as a child process
@@ -62,15 +74,18 @@ public func system(command: String, captureOutput: Bool = false) throws -> Proce
 /// `system` will wait for the process to finish, blocking the current thread.
 ///
 /// - Parameters:
-///   - command: Command to execute and list of parameters, if any.
+///   - command: Command to execute (full binary path or name of executable in $PATH) and list of parameters, if any.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
-///     the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    Defaults to `false`.
+///   - currentDirectoryPath: Specify current directory for child process (optional)
 /// - Returns: Process result data which is available after process termination.
 ///   The `ProcessResult` object includes exit code or termination signal and any captured output.
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
-public func system(command: String..., captureOutput: Bool = false) throws -> ProcessResult {
-    return try system(command: command, captureOutput: captureOutput)
+public func system(command: String..., captureOutput: Bool = false,
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult {
+    return try system(command: command, captureOutput: captureOutput, currentDirectoryPath: currentDirectoryPath)
 }
 
 // MARK: - Shell helpers
@@ -82,13 +97,17 @@ public func system(command: String..., captureOutput: Bool = false) throws -> Pr
 /// - Parameters:
 ///   - shell: Shell command with parameters to execute in a subshell with `sh -c`.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
-///     the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
+///                    Defaults to `false`.
+///   - currentDirectoryPath: Specify current directory for child process (optional)
 /// - Returns: Process result data which is available after process termination.
 ///   The `ProcessResult` object includes exit code or termination signal and any captured output.
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
-public func system(shell: String, captureOutput: Bool = false) throws -> ProcessResult {
-    return try system(command: "/bin/sh", parameters: ["-c", shell], captureOutput: captureOutput)
+public func system(shell: String, captureOutput: Bool = false,
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult {
+    return try system(command: "/bin/sh", parameters: ["-c", shell],
+                      captureOutput: captureOutput, currentDirectoryPath: currentDirectoryPath)
 }
 
 // MARK: - Other helpers
