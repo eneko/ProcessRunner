@@ -5,16 +5,19 @@ public class ProcessRunner {
     public let command: String
     public let arguments: [String]
     public let captureOutput: Bool
+    public let currentDirectoryPath: String?
 
     /// Initialize process runner
     /// - Parameters:
     ///   - command: Absolute path to the binary executable
     ///   - arguments: List of arguments to pass to the executable
     ///   - captureOutput: Capture stdout and stderr
-    public init(command: String, arguments: [String], captureOutput: Bool) {
+    ///   - currentDirectoryPath: Specify current directory for child process (optional)
+    public init(command: String, arguments: [String], captureOutput: Bool, currentDirectoryPath: String? = nil) {
         self.command = command
         self.arguments = arguments
         self.captureOutput = captureOutput
+        self.currentDirectoryPath = currentDirectoryPath
     }
 
     /// Execute the process
@@ -24,6 +27,11 @@ public class ProcessRunner {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: command)
         process.arguments = arguments
+
+        if let path = currentDirectoryPath {
+            process.currentDirectoryPath = path
+        }
+
         let outputPipe = Pipe()
         let errorPipe = Pipe()
         if captureOutput {
