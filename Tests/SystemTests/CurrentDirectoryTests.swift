@@ -4,7 +4,7 @@ import System
 final class CurrentDirectoryTests: XCTestCase {
 
     func testCurrentDirectory() throws {
-        XCTAssertEqual(try system(command: "pwd", captureOutput: true, currentDirectoryPath: "/tmp").standardOutput, "/tmp")
+        XCTAssertEqual(try system(command: "pwd", captureOutput: true, currentDirectoryPath: "/").standardOutput, "/")
     }
 
     func testCurrentDirectoryCommand() throws {
