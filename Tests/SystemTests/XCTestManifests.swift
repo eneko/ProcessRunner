@@ -7,7 +7,7 @@ extension ProcessRunnerTests {
     // to regenerate.
     static let __allTests__ProcessRunnerTests = [
         ("testShell", testShell),
-        ("testWhich", testWhich),
+        ("testWhich", testWhich)
     ]
 }
 
@@ -17,7 +17,7 @@ extension StandardErrorTests {
     // to regenerate.
     static let __allTests__StandardErrorTests = [
         ("testStandardError", testStandardError),
-        ("testStandardErrorShell", testStandardErrorShell),
+        ("testStandardErrorShell", testStandardErrorShell)
     ]
 }
 
@@ -35,7 +35,7 @@ extension StandardOutputTests {
         ("testShell", testShell),
         ("testShellPipe", testShellPipe),
         ("testShellRedirect", testShellRedirect),
-        ("testShellRedirectPipe", testShellRedirectPipe),
+        ("testShellRedirectPipe", testShellRedirectPipe)
     ]
 }
 
@@ -46,7 +46,7 @@ extension SuccessFailureTests {
     static let __allTests__SuccessFailureTests = [
         ("testFailure", testFailure),
         ("testProcessNotFound", testProcessNotFound),
-        ("testSuccess", testSuccess),
+        ("testSuccess", testSuccess)
     ]
 }
 
@@ -55,7 +55,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(ProcessRunnerTests.__allTests__ProcessRunnerTests),
         testCase(StandardErrorTests.__allTests__StandardErrorTests),
         testCase(StandardOutputTests.__allTests__StandardOutputTests),
-        testCase(SuccessFailureTests.__allTests__SuccessFailureTests),
+        testCase(SuccessFailureTests.__allTests__SuccessFailureTests)
     ]
 }
 #endif

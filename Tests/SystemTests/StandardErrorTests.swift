@@ -4,11 +4,11 @@ import System
 final class StandardErrorTests: XCTestCase {
 
     var expectedError: String {
-      #if os(Linux)
+        #if os(Linux)
         return "cat: unrecognized option"
-      #else
+        #else
         return "cat: illegal option"
-      #endif
+        #endif
     }
 
     func testStandardError() throws {

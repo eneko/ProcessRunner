@@ -16,8 +16,7 @@ import Foundation
 /// - Throws: `SystemError.waitpid` if process execution failed.
 @discardableResult
 public func system(command: String, parameters: [String], captureOutput: Bool = false,
-                   currentDirectoryPath: String? = nil) throws -> ProcessResult
-{
+                   currentDirectoryPath: String? = nil) throws -> ProcessResult {
     let executablePath = /*command.hasPrefix("/") ? command :*/ try which(program: command)
     return try ProcessRunner(command: executablePath, arguments: parameters,
                              captureOutput: captureOutput,
@@ -54,7 +53,8 @@ public func system(command: [String], captureOutput: Bool = false,
 /// `system` will wait for the process to finish, blocking the current thread.
 ///
 /// - Parameters:
-///   - command: Command to execute (full binary path or name of executable in $PATH) and list of parameters. Parameters will be split by spaces.
+///   - command: Command to execute (full binary path or name of executable in $PATH) and list of parameters.
+///              Parameters will be split by spaces.
 ///   - captureOutput: If output is captured, both stdout and strerr will be available in
 ///                    the return object. Otherwise, process output will be forwarded to stdout and stderr.
 ///                    Defaults to `false`.

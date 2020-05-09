@@ -1,10 +1,20 @@
 name: CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
+  lint:
+    name: SwiftLint
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install
+      run: brew install swiftlint
+    - name: Lint
+      run: make lint
+
   build:
-    name: MacOS
+    name: MacOS Latest
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,7 +26,7 @@ jobs:
       run: swift test --parallel
 
   ubuntu:
-    name: Ubuntu
+    name: Ubuntu Latest
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
