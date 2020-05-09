@@ -2,7 +2,7 @@ import XCTest
 import System
 
 final class SuccessFailureTests: XCTestCase {
-    
+
     func testSuccess() throws {
         XCTAssertTrue(try system(shell: "echo foo bar").success)
     }

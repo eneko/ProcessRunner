@@ -7,10 +7,10 @@ let package = Package(
         .macOS(.v10_13)
     ],
     products: [
-        .library(name: "System", targets: ["System"]),
+        .library(name: "System", targets: ["System"])
     ],
     targets: [
         .target(name: "System", dependencies: []),
-        .testTarget(name: "SystemTests", dependencies: ["System"]),
+        .testTarget(name: "SystemTests", dependencies: ["System"])
     ]
 )
