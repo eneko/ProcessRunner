@@ -8,6 +8,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Install
+      run: brew install swiftlint
     - name: Lint
       run: make lint
 
