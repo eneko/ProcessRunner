@@ -19,8 +19,8 @@ install:
   - swift --version
 
 script:
-  - swift test
-  - swift test --parallel
+  - swift test --enable-test-discovery
+  - swift test --parallel --enable-test-discovery
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       swift package generate-xcodeproj --enable-code-coverage;
       xcodebuild -scheme System-Package test;

@@ -35,4 +35,4 @@ jobs:
     - name: Run tests
       run: swift test
     - name: Run tests in parallel
-      run: swift test --parallel
+      run: swift test --parallel --enable-test-discovery
