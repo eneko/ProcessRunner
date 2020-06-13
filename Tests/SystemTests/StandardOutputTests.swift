@@ -41,12 +41,12 @@ final class StandardOutputTests: XCTestCase {
     }
 
     func testShellRedirect() throws {
-        XCTAssertEqual(try system(shell: "echo hello cat > cat && cat cat", captureOutput: true).standardOutput,
-                       "hello cat")
+        let result = try system(shell: "echo hello cat > cat && cat cat && rm cat", captureOutput: true)
+        XCTAssertEqual(result.standardOutput, "hello cat")
     }
 
     func testShellRedirectPipe() throws {
-        let output = try system(shell: "echo hello cat > cat && cat cat | awk '{print $2}'",
+        let output = try system(shell: "echo hello cat > cat && cat cat | awk '{print $2}' && rm cat",
                                 captureOutput: true).standardOutput
         XCTAssertEqual(output, "cat")
     }
