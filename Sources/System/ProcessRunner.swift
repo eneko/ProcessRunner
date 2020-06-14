@@ -27,7 +27,10 @@ public class ProcessRunner {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: command)
         process.arguments = arguments
-        process.currentDirectoryURL = currentDirectoryPath.flatMap(URL.init(fileURLWithPath:))
+
+        if let path = currentDirectoryPath {
+            process.currentDirectoryURL = URL(fileURLWithPath: path)
+        }
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
