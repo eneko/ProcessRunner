@@ -8,3 +8,6 @@ lint:
 	swiftlint autocorrect --format --quiet
 	swiftlint lint --quiet --strict
 
+dockertest:
+	docker build -f Dockerfile -t linuxtest .
+	docker run linuxtest
