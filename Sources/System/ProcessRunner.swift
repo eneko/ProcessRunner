@@ -29,7 +29,7 @@ public class ProcessRunner {
         process.arguments = arguments
 
         if let path = currentDirectoryPath {
-            process.currentDirectoryPath = path
+            process.currentDirectoryURL = URL(fileURLWithPath: path)
         }
 
         let outputPipe = Pipe()
