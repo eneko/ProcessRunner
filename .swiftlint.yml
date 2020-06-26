@@ -1,7 +1,7 @@
 excluded:
   - .build
   - Tests/LinuxMain.swift
-  - Tests/SystemTests/XCTestManifests.swift
+  - Tests/ProcessRunnerTests/XCTestManifests.swift
 
 
 opt_in_rules:

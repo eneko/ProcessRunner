@@ -1,5 +1,5 @@
 import XCTest
-import System
+import ProcessRunner
 
 final class ProcessRunnerTests: XCTestCase {
 

@@ -23,7 +23,7 @@ script:
   - swift test --parallel
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       swift package generate-xcodeproj --enable-code-coverage;
-      xcodebuild -scheme System-Package test;
+      xcodebuild -scheme ProcessRunner-Package test;
     fi
 
 after_success:

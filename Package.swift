@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "System",
+    name: "ProcessRunner",
     platforms: [
         .macOS(.v10_13)
     ],
     products: [
-        .library(name: "System", targets: ["System"])
+        .library(name: "ProcessRunner", targets: ["ProcessRunner"])
     ],
     targets: [
-        .target(name: "System", dependencies: []),
-        .testTarget(name: "SystemTests", dependencies: ["System"])
+        .target(name: "ProcessRunner", dependencies: []),
+        .testTarget(name: "ProcessRunnerTests", dependencies: ["ProcessRunner"])
     ]
 )
