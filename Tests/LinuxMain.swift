@@ -1,8 +1,8 @@
 import XCTest
 
-import SystemTests
+import ProcessRunnerTests
 
 var tests = [XCTestCaseEntry]()
-tests += SystemTests.__allTests()
+tests += ProcessRunnerTests.__allTests()
 
 XCTMain(tests)
